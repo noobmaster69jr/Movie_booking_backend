@@ -22,7 +22,7 @@ db.once("open", () => {
 require("./routes/movie.routes")(app);
 
 app.get("/", (req, res) => {
-  res.send("Inside Movie Booking Application");
+  res.status(401).send("Inside Movie Booking Application ");
 });
 
 app.listen(serverConfig.PORT, () => {

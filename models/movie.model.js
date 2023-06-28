@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const constants = require('../utils/constants')
 
 const movieSchema = new mongoose.Schema({
   name: {
@@ -36,8 +37,9 @@ const movieSchema = new mongoose.Schema({
   releaseStatus: {
     type: String,
     required: true,
-    default: "RELEASED",
+    default: constants.releaseStatus.released,
   },
 });
 
 module.exports = mongoose.model("Movie", movieSchema);
+
