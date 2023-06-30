@@ -21,7 +21,7 @@ db.once("open", () => {
 
 require("./routes/movie.routes")(app);
 require("./routes/theatre.routes")(app);
-
+require("./routes/auth.routes")(app)
 
 app.get("/", (req, res) => {
   res.status(401).send("Inside Movie Booking Application ");
