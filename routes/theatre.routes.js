@@ -1,10 +1,13 @@
 const theatreController = require("../controllers/theatre.controller");
 const { verifyToken, isAdmin } = require("../middlewares/authJWT");
+const {
+  validateTheatreRequestBody,
+} = require("../middlewares/validateTheatreReqBody");
 
 module.exports = function (app) {
   app.post(
     "/mba/api/v1/theatres",
-    [verifyToken, isAdmin],
+    [verifyToken, isAdmin, validateTheatreRequestBody],
     theatreController.createTheatre
   );
   app.get(
