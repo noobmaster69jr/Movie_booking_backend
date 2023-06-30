@@ -1,4 +1,5 @@
 const Movie = require("../models/movie.model");
+const Theatre = require("../models/theatre.model");
 
 exports.createMovie = async (req, res) => {
   const movie = await Movie.create(req.body);
@@ -55,4 +56,24 @@ exports.deleteMovie = async (req, res) => {
   res
     .status(200)
     .send({ message: `Successfully deleted movie with id:${req.params.id}` });
+}
+
+exports.getTheatresForAMovie = async (req, res) =>{
+  const movie = req.params.movieId
+  const savedMovie = await Movie.findById({
+    _id:movie
+  })
+  //validate movieId
+   if (!savedMovie) {
+     res.status(400).send({ message: "Invalid Movie Id" });
+   }
+
+   //get all the theatres
+   const savedTheatres = await Theatre.find({});
+
+   const validTheatres = savedTheatres.filter((theatre) =>
+     theatre.movies.includes(movie)
+   );
+
+   res.status(200).send(validTheatres);
 }

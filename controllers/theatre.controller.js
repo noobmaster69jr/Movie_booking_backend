@@ -1,4 +1,5 @@
 const Theatre = require("../models/theatre.model");
+const Movie = require("../models/movie.model");
 
 exports.createTheatre = async (req, res) => {
   const theatreObject = {
@@ -110,3 +111,28 @@ exports.addMoviesToTheatre = async (req,res) => {
     return res.status(200).send(updatedTheatre);  
 
 }
+
+
+exports.checkIfMovieRunningInTheatre = async (req, res) => {
+  const { theatreId, movieId } = req.params;
+
+  const savedTheatre = await Theatre.findOne({ _id: theatreId });
+
+  const savedMovie = await Movie.findOne({ _id: movieId });
+
+  if (!savedTheatre) {
+    res.status(400).send({ message: "Invalid Theatre Id" });
+  }
+
+  if (!savedMovie) {
+    res.status(400).send({ message: "Invalid Movie Id" });
+  }
+
+  const response = {
+    message: savedTheatre.movies.includes(savedMovie._id)
+      ? "Movie is present"
+      : "Movie is not present",
+  };
+
+  res.status(200).send(response);
+};
