@@ -8,11 +8,11 @@ const serverConfig = require("./configs/server.config");
 const dbConfig = require("./configs/db.config");
 const User = require("./models/user.model");
 const constants = require("./utils/constants");
-
+var cors = require('cors')
 const app = express();
 
 app.use(bodyParser.json());
-
+app.use(cors())
 
 mongoose.connect("mongodb://localhost:27017/mba_db")
 const db = mongoose.connection
