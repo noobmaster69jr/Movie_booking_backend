@@ -1,4 +1,4 @@
-const { verifyToken } = require("../middlewares/authJWT");
+const { verifyToken, isAdmin } = require("../middlewares/authJWT");
 const {
   validateBookingRequestBody,
 } = require("../middlewares/validateBookingRequestBody");
@@ -19,5 +19,15 @@ module.exports = function (app) {
     "/mba/api/v1/bookings",
     [verifyToken],
     bookingController.getAllBookings
+  );
+  app.put(
+    "/mba/api/v1/bookings/:id",
+    [verifyToken, isAdmin],
+    bookingController.updateBooking
+  );
+  app.put(
+    "/mba/api/v1/bookings/:id/cancel",
+    [verifyToken],
+    bookingController.cancelBooking
   );
 };
