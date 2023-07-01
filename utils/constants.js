@@ -21,6 +21,7 @@ const bookingStatus = {
   completed: "COMPLETED",
   cancelled: "CANCELLED",
   expired: "EXPIRED",
+  failed: "FAILED",
 };
 
 const paymentStatus = {
