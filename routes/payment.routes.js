@@ -16,4 +16,10 @@ module.exports = function (app) {
      [verifyToken],
      paymentController.getAllPayments
    );
+
+    app.get(
+      "/mba/api/v1/payments/:id",
+      [verifyToken],
+      paymentController.getPaymentById
+    );
 };
