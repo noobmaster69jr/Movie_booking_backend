@@ -1,6 +1,7 @@
 const Booking = require("../models/Booking.model");
 const constants = require("../utils/constants");
 const Payment = require("../models/payment.model");
+const User = require("../models/user.model");
 
 exports.createNewPayment = async (req, res) => {
   //bookingId in the request
@@ -25,7 +26,7 @@ exports.createNewPayment = async (req, res) => {
   //response will have status of payment
 
   const razorpayAPIReponse = {
-    paymentStatus: constants.paymentStatus.failed,
+    paymentStatus: constants.paymentStatus.success,
   };
 
   var paymentObject = {
@@ -36,6 +37,8 @@ exports.createNewPayment = async (req, res) => {
 
   try {
     const payment = await Payment.create(paymentObject);
+
+    //send an email to the customer
 
     savedBooking.status =
       paymentObject.status === constants.paymentStatus.success
@@ -49,3 +52,27 @@ exports.createNewPayment = async (req, res) => {
     res.status(500).send({ message: "Internal Server error!" });
   }
 };
+
+
+exports.getAllPayments = async (req,res)=>{
+
+    const savedUser = await User.findOne({userId:req.userId});
+
+    const queryObject={};
+
+    if(savedUser.userTypes===constants.userTypes.admin){
+
+    }else{
+
+        const bookings =  await Booking.find({userId:savedUser._id});
+
+        const bookingsIds = bookings.map(booking=>booking._id);
+
+        queryObject.bookingId = { $in:bookingsIds };
+
+    }
+
+     const payments = await Payment.find(queryObject);
+
+     return res.status(200).send(payments);
+}
