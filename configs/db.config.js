@@ -1,5 +1,6 @@
 module.exports = {
   DB_NAME: "mba_db",
   DB_URL:
-   "mongodb://localhost:27017/mba_db"
+   "mongodb+srv://moviebooking81:mangodb@81@cluster0.rrmd9ka.mongodb.net/"
 };
+
