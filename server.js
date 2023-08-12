@@ -14,7 +14,7 @@ const app = express();
 app.use(bodyParser.json());
 app.use(cors())
 
-mongoose.connect("mongodb://localhost:27017/mba_db")
+mongoose.connect(dbConfig.DB_URL)
 const db = mongoose.connection
 db.on("error", () => console.log("Can't connect to DB"));
 db.once("open", () => {
